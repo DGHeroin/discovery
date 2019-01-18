@@ -7,6 +7,7 @@ type Options struct {
     Username    string        `json:"username"`
     Password    string        `json:"password"`
     DialTimeout time.Duration `json:"dial-timeout"`
+    TTL         int64         `json:"ttl"`
     debug       bool
 }
 
@@ -14,7 +15,8 @@ var defaultOptions = Options{
     Endpoints: []string{"http://127.0.0.1:2379"},
     Username:  "",
     Password:  "",
-    debug:false,
+    TTL:       5,
+    debug:     false,
 }
 
 type OptionFunc func(options *Options)
@@ -49,3 +51,8 @@ func WithDebug(debug bool) OptionFunc {
     }
 }
 
+func WithTTL(ttl int64) OptionFunc {
+    return func(o *Options) {
+        o.TTL = ttl
+    }
+}

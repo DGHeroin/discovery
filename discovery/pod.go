@@ -84,7 +84,7 @@ func (p *pod) keepAlive() (<-chan *clientv3.LeaseKeepAliveResponse, error) {
         log.Printf("pod write to [%v]", key)
     }
     value := base64.StdEncoding.EncodeToString(p.data)
-    resp, err := p.client.Grant(context.TODO(), 10)
+    resp, err := p.client.Grant(context.TODO(), p.options.TTL)
     if err != nil {
         return nil, err
     }
