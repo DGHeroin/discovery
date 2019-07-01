@@ -1,4 +1,4 @@
-package etcd_go_discovery
+package discovery
 
 import (
     "testing"
