@@ -2,7 +2,6 @@ package discovery
 
 import (
     "testing"
-    "github.com/DGHeroin/etcd-go-discovery/discovery"
     "time"
 )
 
@@ -17,13 +16,13 @@ func TestDiscovery(t *testing.T) {
 
 func startMaster(t *testing.T)  {
     var err error
-    var master discovery.Master
-    master, err = discovery.NewMaster( "pods", discovery.WithEndpoints(endpoints));
+    var master Master
+    master, err = NewMaster( "pods", WithEndpoints(endpoints));
     if err != nil {
         t.Fatal(err)
     }
 
-    master.HandleFunc(func(eventType discovery.EventType, key string, value []byte) {
+    master.HandleFunc(func(eventType EventType, key string, value []byte) {
         t.Logf("Event:%-6s|%-20v|%-20v|Pod Num=%v",
             eventType, key, string(value),
             master.Count())
@@ -38,8 +37,8 @@ func startMaster(t *testing.T)  {
 
 func startPod(t *testing.T) {
     data := []byte("hello-world")
-    pod, err := discovery.NewPod("pod-name", "pods", data,
-        discovery.WithEndpoints(endpoints))
+    pod, err := NewPod("pod-name", "pods", data,
+        WithEndpoints(endpoints))
     if err != nil {
         t.Fatal(err)
     }
