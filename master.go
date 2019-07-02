@@ -109,7 +109,6 @@ func (m *master) onResponse(resp clientv3.WatchResponse) {
         case clientv3.EventTypeDelete:
             key := string(ev.Kv.Key)
             atomic.AddInt64(&m.count, -1)
-
             if m.cb != nil {
                 m.cb(EventTypeDelete, key, nil)
             }

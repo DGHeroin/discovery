@@ -6,6 +6,7 @@ import (
     "context"
     "log"
     "encoding/base64"
+    "time"
 )
 
 type Pod interface {
@@ -54,8 +55,11 @@ func (p *pod) Serve() error {
         log.Println(err)
         return err
     }
+    ttlTicker := time.NewTicker(time.Duration(p.options.TTL) * time.Second)
+    defer ttlTicker.Stop()
     for {
         select {
+        case <-ttlTicker.C:
         case err := <-p.stop:
             p.revoke()
             return err

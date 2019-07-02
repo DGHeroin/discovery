@@ -1,7 +1,7 @@
 package main
 
 import (
-    "github.com/DGHeroin/etcd-go-discovery/discovery"
+    "github.com/DGHeroin/discovery"
     "log"
     "time"
 )
